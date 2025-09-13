@@ -9,7 +9,7 @@ validation using DNS server. In this case using Google Cloud DNS.
 
 Look file [dns_gcloud.README.txt](dns_gcloud.README.txt)
 
-Include more using getssl with Google Cloud DNS.
+Includes more instructions on how to use Google Cloud DNS with the `getssl` command.
 
 
 Regards,
