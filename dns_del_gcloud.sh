@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# dns_del_gcloud.sh
+# Del TXT record to the Google Cloud DNS
+# ver 2025-09-13 
+# https://github.com/kshji/getssl_gcloud
+#
+# Del the TXT DNS record using gcloud command
+# 
+fulldomain="$1"
+token="$2"
+
+[ "$GCLOUD_PROJECTID" = "" ] && echo "GCLOUD_PROJECTID is not set. Unable to set TXT records." && exit 2
+[ "$GCLOUD_ZONE" = "" ] && echo "GCLOUD_ZONE is not set. Unable to set TXT records." && exit 2
+[ "$GCLOUD_ACCOUNT" = "" ] && echo "GCLOUD_ACCOUNT is not set. Unable to set TXT records." && exit 2
+[ "$GCLOUD_KEYFILE" = "" ] && echo "GCLOUD_KEYFILE is not set. Unable to set TXT records." && exit 2
+[ ! -f "$GCLOUD_KEYFILE" ] && echo "file not usable:$GCLOUD_KEYFILE" && exit 2
+
+
+# activate google cloud account
+gcloud auth activate-service-account "$GCLOUD_ACCOUNT" --key-file="$GCLOUD_KEYFILE"
+stat=$?
+(( stat > 0 )) && echo "gcloud activate account error" && exit 2
+
+
+# host name
+gname="_acme-challenge.$fulldomain"
+
+# start transaction
+gcloud dns record-sets transaction start --zone="$GCLOUD_ZONE" --project="$GCLOUD_PROJECTID"
+stat=$?
+(( stat > 0 )) && echo "gcloud start transaction error" && exit 2
+
+# del TXT
+gcloud dns record-sets transaction remove  --name="$gname" --ttl=60 --type="TXT" \
+	--zone="$GCLOUD_ZONE" --project="$GCLOUD_PROJECTID" "$token"
+stat=$?
+(( stat > 0 )) && echo "gcloud remove error" && exit 2
+
+gcloud dns record-sets transaction execute --zone="$GCLOUD_ZONE" --project="$GCLOUD_PROJECTID"
+stat=$?
+(( stat > 0 )) && echo "gcloud transaction execute error" && exit 2
+
+# if not sleep, get error ???
+sleep 10
+exit 0
