@@ -11,3 +11,7 @@ Look file dns_gcloud.README.txt
 
 Include more using getssl with Google Cloud DNS.
 
+
+Regards,
+
+Jukka
