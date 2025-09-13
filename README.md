@@ -7,9 +7,8 @@ handle SSL certificates from the letsencrypt.org ACME server.
 This commandfiles are for DNS ADD and DNS DEL process using getssl and making
 validation using DNS server. In this case using Google Cloud DNS.
 
-Look file [dns_gcloud.README.txt](dns_gcloud.README.txt)
-
-Includes more instructions on how to use Google Cloud DNS with the `getssl` command.
+Look file [dns_gcloud.README.txt](dns_gcloud.README.txt), 
+includes more instructions on how to use Google Cloud DNS with the `getssl` command.
 
 
 Regards,
