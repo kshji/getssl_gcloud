@@ -51,7 +51,7 @@ ZONEID is usually ex. for domain example.com it is ***examplecom***
 
 example.com/getssl.cfg
 
-` bash
+``` sh
 CA="https://acme-v02.api.letsencrypt.org"
 SANS="*.example.com"
 
@@ -73,5 +73,5 @@ export GCLOUD_PROJECTID="mydnsproject"   # Google Cloud projectid
 export GCLOUD_ACCOUNT="someuser@mydnsproject.iam.gserviceaccount.com"  
 export GCLOUD_KEYFILE="/somepath/mydnsprojectSomeid.json"
 
-`
+```
 
