@@ -77,3 +77,70 @@ export GCLOUD_KEYFILE="/somepath/mydnsprojectSomeid.json"
 
 ```
 
+## dns_cloud manual
+
+ * default host is _acme-challenge.
+ * default ttl is 60 s.
+ * default sleep after gcloud process is 10 s.
+ * default debug is 0 = off
+ * env variables have to setup before using `dns_gcloud`:
+ ** GCLOUD_ZONE
+ ** GCLOUD_PROJECTID
+ ** GCLOUD_ACCOUNT
+ ** GCLOUD_KEYFILE
+
+ 
+
+### Add TXT token
+Add TXT token "testN"", host _acme-challenge.example.com
+
+``` sh
+dns_gloud -c add example.com "testN"
+```
+ 
+Add TXT token "testN"", host somehost.example.com
+``` sh
+dns_gloud -h somehost -c add example.com "testN"
+```
+
+### Del TXT token
+Del TXT token "testN"", host _acme-challenge.example.com
+``` sh
+dns_gloud -c del example.com "testN"
+```
+Del TXT token "testN"", host somehost.example.com
+``` sh
+dns_gloud -h somehost -c del example.com "testN"
+```
+
+### List TXT token
+
+List host TXT tokens, default host _acme-challenge
+``` sh
+dns_gloud -c list example.com 
+```
+
+List domain TXT tokens, not host. Set host empty string.
+``` sh
+dns_gloud -h "" -c list example.com 
+```
+
+
+### Extra options
+
+Debug messages, option -d with argument 0 or 1. 
+Some debug messages to the stdout and log env settings to file to dir ***/var/tmp/getssl***
+
+``` sh
+dns_gloud -d 1 -h "" -c list example.com 
+```
+
+Change default 60 second ttl value when adding. Remember,when deleting, ttl have to be same.
+``` sh
+dns_gloud -c add -t 300 example.com "testN"
+```
+Change default 10 second sleep after process
+``` sh
+dns_gloud -c add -s 5 example.com "testN"
+```
+
