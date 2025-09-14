@@ -11,7 +11,7 @@ ver 2025-09-13
 If you are using *nix server without desktop (x-term), remove DISPLAY set if it's.
 If you have set DISPLAY, try init process to start local chrome GUI process.
 ``` sh
-     unset DISPLAY
+unset DISPLAY
 ```
 
 Init gcloud using, need to do once.
@@ -61,20 +61,17 @@ CA="https://acme-v02.api.letsencrypt.org"
 SANS="*.example.com"
 
 #Set this to "true" to enable DNS validation
-
 VALIDATE_VIA_DNS="true"             
 # Google Cloud DNS setup
-
 # Use this command/script to add the challenge token to the DN#S entries for the domain
-
 DNS_ADD_COMMAND="/somepath/dns_add_gcloud"              
 # Use this command/script to remove the challenge token from the DNS entries for the domain
 DNS_DEL_COMMAND="/somepath/dns_del_gcloud"              `
 
-# example.com
+# example.com setup got Google Cloud DNS validation
 export GCLOUD_ZONE="examplecom"          # Google Cloud DNS zoneid
 export GCLOUD_PROJECTID="mydnsproject"   # Google Cloud projectid
-# Service Account
+# Google Cloud Service Account
 export GCLOUD_ACCOUNT="someuser@mydnsproject.iam.gserviceaccount.com"  
 export GCLOUD_KEYFILE="/somepath/mydnsprojectSomeid.json"
 
