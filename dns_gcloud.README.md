@@ -84,12 +84,10 @@ export GCLOUD_KEYFILE="/somepath/mydnsprojectSomeid.json"
  * default sleep after gcloud process is 10 s.
  * default debug is 0 = off
  * env variables have to setup before using `dns_gcloud`:
- ** GCLOUD_ZONE
- ** GCLOUD_PROJECTID
- ** GCLOUD_ACCOUNT
- ** GCLOUD_KEYFILE
-
- 
+   * GCLOUD_ZONE
+   * GCLOUD_PROJECTID
+   * GCLOUD_ACCOUNT
+   * GCLOUD_KEYFILE
 
 ### Add TXT token
 Add TXT token "testN"", host _acme-challenge.example.com
