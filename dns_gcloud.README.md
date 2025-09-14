@@ -64,9 +64,9 @@ SANS="*.example.com"
 VALIDATE_VIA_DNS="true"             
 # Google Cloud DNS setup
 # Use this command/script to add the challenge token to the DN#S entries for the domain
-DNS_ADD_COMMAND="/somepath/dns_add_gcloud"              
+DNS_ADD_COMMAND="/somepath/dns_gcloud -c add "              
 # Use this command/script to remove the challenge token from the DNS entries for the domain
-DNS_DEL_COMMAND="/somepath/dns_del_gcloud"        
+DNS_DEL_COMMAND="/somepath/dns_gcloud -c del "        
 
 # example.com setup Google Cloud DNS validation
 export GCLOUD_ZONE="examplecom"          # Google Cloud DNS zoneid
