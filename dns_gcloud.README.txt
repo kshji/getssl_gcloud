@@ -41,9 +41,9 @@ gcloud dns record-sets list --zone=ZONEID --name="example.com." --type="TXT"
    VALIDATE_VIA_DNS="true"             
    # Google Cloud DNS setup
    #  Use this command/script to add the challenge token to the DNS entries for the domain
-   DNS_ADD_COMMAND="/somepath/dns_add_gcloud.sh"              
+   DNS_ADD_COMMAND="/somepath/dns_add_gcloud"              
    # Use this command/script to remove the challenge token from the DNS entries for the domain
-   DNS_DEL_COMMAND="/somepath/dns_del_gcloud.sh"              
+   DNS_DEL_COMMAND="/somepath/dns_del_gcloud"              
    
    # example.com
    export GCLOUD_ZONE="examplecom"          # Google Cloud DNS zoneid
