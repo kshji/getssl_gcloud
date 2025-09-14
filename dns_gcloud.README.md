@@ -51,20 +51,25 @@ ZONEID is usually ex. for domain example.com it is ***examplecom***
 
 example.com/getssl.cfg
 
-`CA="https://acme-v02.api.letsencrypt.org"
+` bash
+CA="https://acme-v02.api.letsencrypt.org"
 SANS="*.example.com"
-\# Set this to "true" to enable DNS validation
+
+#Set this to "true" to enable DNS validation
+
 VALIDATE_VIA_DNS="true"             
-\# Google Cloud DNS setup
-\#  Use this command/script to add the challenge token to the DNS entries for the domain
+# Google Cloud DNS setup
+
+# Use this command/script to add the challenge token to the DN#S entries for the domain
+
 DNS_ADD_COMMAND="/somepath/dns_add_gcloud"              
-\# Use this command/script to remove the challenge token from the DNS entries for the domain
+# Use this command/script to remove the challenge token from the DNS entries for the domain
 DNS_DEL_COMMAND="/somepath/dns_del_gcloud"              `
 
-`\# example.com
+# example.com
 export GCLOUD_ZONE="examplecom"          # Google Cloud DNS zoneid
 export GCLOUD_PROJECTID="mydnsproject"   # Google Cloud projectid
-\# Service Account
+# Service Account
 export GCLOUD_ACCOUNT="someuser@mydnsproject.iam.gserviceaccount.com"  
 export GCLOUD_KEYFILE="/somepath/mydnsprojectSomeid.json"
 
