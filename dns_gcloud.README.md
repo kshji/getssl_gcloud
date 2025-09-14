@@ -1,0 +1,65 @@
+# getssl using Google Cloud DNS
+
+https://github.com/kshji/getssl_gcloud
+ver 2025-09-13
+
+## You need install gcloud command
+[Gcloud install](gle.com/sdk/docs/install)
+
+if using linux server without desktop (x-term):
+`
+     unset DISPLAY
+`
+
+Init gcloud using
+`
+gcloud init
+`
+
+Need also Google Cloud Console Service Account:
+[Google Cloud Console Service Account](https://console.cloud.google.com/projectselector2/iam-admin/serviceaccounts )
+*  Permissions role "DNS Zone Editor"
+*  result is JSON keyfile
+
+Service Account  account is email, usually something like  xxx@xxx.gserviceaccount.com
+
+Example using keyfile:
+`
+gcloud auth activate-service-account xxx@xxx.gserviceaccount.com --key-file=/somepath/PROJECT_ID_xxxxx.json
+`
+
+After auth you can use gcloud dns services.
+
+Get zones from your Google Cloud DNS project:
+`gcloud dns managed-zones list --project=PROJECT_ID`
+
+More gcloud dns commands:
+[Reference DNS](ogle.com/sdk/gcloud/reference/dns)
+
+List domain TXT records:
+`gcloud dns record-sets list --zone=ZONEID --name="example.com." --type="TXT" `
+
+ZONEID is usually ex. for domain example.com it si ***examplecom***
+
+## getssl configuration DNS validation using Google Cloud DNS
+
+example.com/getssl.cfg
+`
+CA="https://acme-v02.api.letsencrypt.org"
+SANS="*.example.com"
+# Set this to "true" to enable DNS validation
+VALIDATE_VIA_DNS="true"             
+# Google Cloud DNS setup
+#  Use this command/script to add the challenge token to the DNS entries for the domain
+DNS_ADD_COMMAND="/somepath/dns_add_gcloud"              
+# Use this command/script to remove the challenge token from the DNS entries for the domain
+DNS_DEL_COMMAND="/somepath/dns_del_gcloud"              
+   
+# example.com
+export GCLOUD_ZONE="examplecom"          # Google Cloud DNS zoneid
+export GCLOUD_PROJECTID="mydnsproject"   # Google Cloud projectid
+# Service Account
+export GCLOUD_ACCOUNT="someuser@mydnsproject.iam.gserviceaccount.com"  
+export GCLOUD_KEYFILE="/somepath/mydnsprojectSomeid.json"
+`
+
