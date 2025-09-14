@@ -1,17 +1,19 @@
 # getssl using Google Cloud DNS
 
 https://github.com/kshji/getssl_gcloud
+
 ver 2025-09-13
 
 ## You need install gcloud command
 [Gcloud install](gle.com/sdk/docs/install)
 
-if using linux server without desktop (x-term):
+If you are using *nix server without desktop (x-term):
 `
      unset DISPLAY
 `
 
-Init gcloud using
+Init gcloud using, need to do once.
+
 `
 gcloud init
 `
@@ -30,16 +32,17 @@ gcloud auth activate-service-account xxx@xxx.gserviceaccount.com --key-file=/som
 
 After auth you can use gcloud dns services.
 
-Get zones from your Google Cloud DNS project:
+***Example***: Get zones from your Google Cloud DNS project:
+
 `gcloud dns managed-zones list --project=PROJECT_ID`
 
-More gcloud dns commands:
-[Reference DNS](ogle.com/sdk/gcloud/reference/dns)
+More gcloud dns commands: [Reference DNS](https://google.com/sdk/gcloud/reference/dns)
 
-List domain TXT records:
+***Example***: List domain TXT records:
+
 `gcloud dns record-sets list --zone=ZONEID --name="example.com." --type="TXT" `
 
-ZONEID is usually ex. for domain example.com it si ***examplecom***
+ZONEID is usually ex. for domain example.com it is ***examplecom***
 
 ## getssl configuration DNS validation using Google Cloud DNS
 
