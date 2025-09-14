@@ -10,7 +10,7 @@ validation using DNS server. In this case using Google Cloud DNS.
 Look file [dns_gcloud.README](dns_gcloud.README.md), 
 includes more instructions on how to use Google Cloud DNS with the `getssl` command.
 
-If you looking other DNS validation scripts, look [GetSSL sdns_scripts](https://github.com/srvrco/getssl/tree/master/dns_scripts)
+If you looking other DNS validation scripts, look [GetSSL dns_scripts](https://github.com/srvrco/getssl/tree/master/dns_scripts)
 
 Regards,
 
