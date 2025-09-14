@@ -62,7 +62,7 @@ stat=$?
 
 
 # host name
-gname="_acme-challenge.$fulldomain"
+gname="_acme-challenge.$fulldomain."
 
 # start transaction
 gcloud dns record-sets transaction start --zone="$GCLOUD_ZONE" --project="$GCLOUD_PROJECTID"
