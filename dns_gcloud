@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 # dns_gcloud
-# Add/Del/List TXT record using the Google Cloud DNS
+# Add/Del/List TXT record using the Google Cloud DNS gcloud command
 # ver 2025-09-14 
-# https://github.com/kshji
-#
-# Set/Unset/List the TXT DNS record using gcloud command
+# org. version:
+# https://github.com/kshji/gitssl_gcloud
 #
 # Main reason to make was to support getssl using DNS validation with Google Cloud DNS
 # You can use this script to any host setting TXT records, default is _acme-challenge
+#
+# dns_gloud -c command domain token
 #
 # dns_gloud -c add example.com "testN" 
 # dns_gloud -c list example.com 
