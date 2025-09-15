@@ -89,6 +89,12 @@ export GCLOUD_KEYFILE="/somepath/mydnsprojectSomeid.json"
    * GCLOUD_ACCOUNT
    * GCLOUD_KEYFILE
 
+### get help
+``` sh
+dns_gloud -?
+dns_gloud --help
+```
+
 ### Add TXT token
 Add TXT token "testN"", host _acme-challenge.example.com
 
