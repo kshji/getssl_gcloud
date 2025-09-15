@@ -10,6 +10,9 @@
 #
 # dns_gloud -c command domain token
 #
+# get help:
+# dns_gloud -? | --help
+#
 # dns_gloud -c add example.com "testN" 
 # dns_gloud -c list example.com 
 # dns_gloud -c del example.com "testN" 
@@ -30,6 +33,23 @@ PRG="$0"
 BINDIR="${PRG%/*}"
 [ "$PRG" = "$BINDIR" ] && BINDIR="." # - same dir as program
 PRG="${PRG##*/}"
+
+#######################################################################################
+usage()
+{
+cat <<EOT
+usage:$PRG -c COMMAND [ -d 0|1 ] [ -t ttlvalue ] [ -s sleep_sec_after_gcloud ] [ -h hostname ] DOMAIN TOKEN
+or
+$PRG --command COMMAND [ --debug 0|1 ] [ --ttl ttlvalue ] [ --sleep sleep_sec_after_gcloud ] [ --host hostname ] DOMAIN TOKEN
+
+    -d 1        # print some debug data and make debug file to the dir /var/tmp/getssl/
+    -t NNN      # set TTL value, default 60. Have to be same in the ADD and DEL
+    -s NN       # default 10 s, sleep seconds after gcloud process
+    -h hostname # hostname, default is _acme-challenge, empty string = use domain
+  
+EOT
+
+}
 
 #######################################################################################
 err()
@@ -210,12 +230,6 @@ add_txt()
 # MAIN
 #######################################################################################
 
-[ "$GCLOUD_PROJECTID" = "" ] && err "GCLOUD_PROJECTID is not set. Unable to set TXT records." && exit 2
-[ "$GCLOUD_ZONE" = "" ] && err "GCLOUD_ZONE is not set. Unable to set TXT records." && exit 2
-[ "$GCLOUD_ACCOUNT" = "" ] && err "GCLOUD_ACCOUNT is not set. Unable to set TXT records." && exit 2
-[ "$GCLOUD_KEYFILE" = "" ] && err "GCLOUD_KEYFILE is not set. Unable to set TXT records." && exit 2
-[ ! -f "$GCLOUD_KEYFILE" ] && err "file not usable:$GCLOUD_KEYFILE" && exit 2
-
 DEBUG=0
 command=""
 sleepafter=10
@@ -230,10 +244,16 @@ do
 		-c|--command|--cmd) command="$2"; shift ;;
 		-d|--debug) DEBUG="$2" ; shift ;;
 		-s|--sleep) sleepafter="$2"; shift ;;
-		-h|--host) host="$2"; shift ;;
+		-h|--host) host="$2" 
+			   [ $# -lt 2 ] && usage && exit 2
+			   host="$2"
+			   shift 
+			;;
 		-t|--ttl) ttl="$2"; shift ;;
+		-?|--help) usage; exit 2 ;;
 		-*|--*) # unknown option
 			err "unknown option $arg"
+			usage
 			exit 2
 		;;
 		*) # arguments, stop the option parser
@@ -242,6 +262,13 @@ do
 	esac
 	shift
 done
+
+[ "$GCLOUD_PROJECTID" = "" ] && err "GCLOUD_PROJECTID is not set. Unable to set TXT records." && exit 2
+[ "$GCLOUD_ZONE" = "" ] && err "GCLOUD_ZONE is not set. Unable to set TXT records." && exit 2
+[ "$GCLOUD_ACCOUNT" = "" ] && err "GCLOUD_ACCOUNT is not set. Unable to set TXT records." && exit 2
+[ "$GCLOUD_KEYFILE" = "" ] && err "GCLOUD_KEYFILE is not set. Unable to set TXT records." && exit 2
+[ ! -f "$GCLOUD_KEYFILE" ] && err "file not usable:$GCLOUD_KEYFILE" && exit 2
+
 
 all="$*"
 fulldomain="$1"
