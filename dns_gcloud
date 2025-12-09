@@ -88,6 +88,7 @@ dbg()
 	echo "GCLOUD_ZONE:$GCLOUD_ZONE"  
 	echo "GCLOUD_ACCOUNT:$GCLOUD_ACCOUNT"  
 	echo "GCLOUD_KEYFILE:$GCLOUD_KEYFILE"  
+	echo "token:<$token>"
 	env
 	} > "$tmpf"
 	for var in $all
@@ -106,6 +107,13 @@ check_end_dot()
 		Xorg="$1"
 		Xnodot="${Xorg%.}"  # remove last dot if there is
 		echo "$Xnodot."     # add dot allways
+}
+
+#######################################################################################
+abort_ta()
+{
+	Xname="$1"
+	gcloud dns record-sets transaction abort --zone="$GCLOUD_ZONE" --project="$GCLOUD_PROJECTID"
 }
 
 #######################################################################################
@@ -170,7 +178,7 @@ del_txt()
 	dbgstr gcloud dns record-sets transaction remove  --name="$Xname" --ttl="$ttl" --type="TXT" \
 			--zone="$GCLOUD_ZONE" --project="$GCLOUD_PROJECTID" "$Xtoken"
 	gcloud dns record-sets transaction remove  --name="$Xname" --ttl="$ttl" --type="TXT" \
-        	--zone="$GCLOUD_ZONE" --project="$GCLOUD_PROJECTID" "$Xtoken"
+        	--zone="$GCLOUD_ZONE" --project="$GCLOUD_PROJECTID" $Xtoken
 	stat=$?
 	if (( stat > 0 )) ; then
 		err "gcloud remove error" 
@@ -215,9 +223,9 @@ add_txt()
 	
 	# add TXT
 	dbgstr gcloud dns record-sets transaction add  --name="$Xname" --ttl="$ttl" --type="TXT" \
-		--zone="$GCLOUD_ZONE" --project="$GCLOUD_PROJECTID" "$Xtoken"
+		--zone="$GCLOUD_ZONE" --project="$GCLOUD_PROJECTID" $Xtoken
 	gcloud dns record-sets transaction add  --name="$Xname" --ttl="$ttl" --type="TXT" \
-		--zone="$GCLOUD_ZONE" --project="$GCLOUD_PROJECTID" "$Xtoken"
+		--zone="$GCLOUD_ZONE" --project="$GCLOUD_PROJECTID" $Xtoken
 	stat=$?
 	if (( stat > 0 )) ; then
 		err "gcloud add error" 
@@ -288,13 +296,14 @@ case "$command" in
 	add) ;;
 	del) ;;
 	list) ;;
+	abort) ;;
 	*) command="" ;;
 esac
 
 
-[ "$command" = "" ] && err "need option -c add | -c del | -c list" && exit 2
+[ "$command" = "" ] && err "need option -c add | -c del | -c list | -c abort" && exit 2
 [ "$fulldomain" = "" ] && err "need fulldomain argument." && exit 2
-[ "$token" = "" ] && [ "$command" != "list" ] && err "need token argument." && exit 2
+[ "$token" = "" ] && [ "$command" != "list" ] && [ "$command" != "abort" ] && err "need token argument." && exit 2
 
 # dbg info to the program tmp dir
 (( DEBUG>0)) && dbg "$fulldomain" "$command"
@@ -316,6 +325,8 @@ case "$command" in
 	del) del_txt "$gname" "$token"
 	    ;;
 	list) list_txt "$gname"
+	    ;;
+	abort) abort_ta "$gname"
 	    ;;
 	*)
 			err "unknown command" 

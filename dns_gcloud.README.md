@@ -129,6 +129,10 @@ List domain TXT tokens, not host. Set host empty string.
 dns_gloud -h "" -c list example.com 
 ```
 
+### Abort transaction
+``` sh
+dns_gloud -c abort example.com 
+```
 
 ### Extra options
 
